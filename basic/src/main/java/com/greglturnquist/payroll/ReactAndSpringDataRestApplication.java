@@ -40,7 +40,8 @@ public class ReactAndSpringDataRestApplication  extends WebMvcConfigurerAdapter 
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
 	    if (environment != null && environment.filesPath != null && !environment.filesPath.isEmpty()) {
-            registry.addResourceHandler("/files/**")
+
+            registry.addResourceHandler("/" + environment.urlPath + "/**")
                     .addResourceLocations(environment.filesPath)
                     .setCachePeriod(0);
         }

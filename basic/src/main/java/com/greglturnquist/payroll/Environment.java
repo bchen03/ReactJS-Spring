@@ -11,4 +11,6 @@ public class Environment {
     @Value("${filespath}")
     public String filesPath;
 
+    @Value("${urlpath}")
+    public String urlPath;
 }
