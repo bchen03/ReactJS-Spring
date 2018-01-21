@@ -58,7 +58,7 @@ class NavBar extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark mdb-color darken-1 container-fluid">
-                <a className="navbar-brand" href="#">mPlatform QA Tests</a>
+                <a className="navbar-brand text-center" href="#">mPlatform QA Tests</a>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
@@ -92,13 +92,23 @@ class ReloadButton extends React.Component {
 
 class FileList extends React.Component {
     render() {
+
+		var message = <p><strong>Click on the Reload button above to load files</strong></p>;
 		var files = this.props.files.map((file, index) =>
-			<File key={index} file={file}/>
-		);
+            <File key={index} file={file}/>
+        );
+
+        if (files && files.length > 0)
+            message = <p><strong>Click on a file below to view:</strong></p>;
+
+        console.log("Files: ", files);
 
         return (
-            <div className="container">
-                {files}
+            <div className="container mt-3">
+                {message}
+                <div className="list-group">
+                    {files}
+                </div>
             </div>
         );
     }
@@ -107,11 +117,7 @@ class FileList extends React.Component {
 class File extends React.Component {
     render() {
         return (
-            <div className="row">
-                <div className="col p-2">
-                <a href={this.props.file.url} target="_blank">{this.props.file.title}</a>
-                </div>
-            </div>
+            <a className="list-group-item list-group-item-action" href={this.props.file.url} target="_blank">{this.props.file.title}</a>
         );
     }
 }
