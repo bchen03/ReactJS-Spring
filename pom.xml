@@ -8,15 +8,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>React.js and Spring Data REST - Root</name>
-	<description>An SPA with ReactJS in the frontend and Spring Data REST in the backend</description>
+	<name>mPlatform file viewer</name>
+	<description>mPlatform file viewer for QA team</description>
 
 	<modules>
 		<module>basic</module>
-		<module>hypermedia</module>
-		<module>conditional</module>
-		<module>events</module>
-		<module>security</module>
 	</modules>
 
 </project>

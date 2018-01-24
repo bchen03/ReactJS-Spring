@@ -14,9 +14,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
- * Created by Benny on 1/20/2018.
- */
 @RestController
 public class FilesController {
 
