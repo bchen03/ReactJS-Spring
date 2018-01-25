@@ -2,10 +2,10 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
+var PropTypes = require('prop-types');
 //const client = require('./client');
 
 class App extends React.Component {
-
 	constructor(props) {
 		super(props);
 
@@ -102,6 +102,10 @@ class NavBar extends React.Component {
     }
 }
 
+NavBar.propTypes = {
+    onReload: PropTypes.func
+}
+
 function ErrorPanel(props) {
     var errorStyle = {
         color: "white",
@@ -113,6 +117,10 @@ function ErrorPanel(props) {
         return <div style={errorStyle}>{props.errorMessage}</div>;
     else
         return <div></div>
+}
+
+ErrorPanel.propTypes = {
+    errorMessage: PropTypes.string
 }
 
 class ReloadButton extends React.Component {
@@ -150,6 +158,10 @@ class FileList extends React.Component {
             </div>
         );
     }
+}
+
+FileList.propTypes = {
+    files: PropTypes.arrayOf(PropTypes.object)
 }
 
 // Higher Order Component (HOC) - Basically the Decorator pattern
@@ -195,11 +207,18 @@ class File extends React.Component {
     render() {
         return (
             <a className="list-group-item list-group-item-action" href={this.props.file.url} target="_blank">
-                <i className="fa fa-file-text-o mr-1" aria-hidden="true"></i>
-                <span>{this.props.file.title}</span>
+                <i className="fa fa-file-text-o" aria-hidden="true"></i>
+                <span className="ml-2">{this.props.file.title}</span>
             </a>
         );
     }
+}
+
+File.propTypes = {
+    file: PropTypes.shape({
+        title: PropTypes.string,
+        url: PropTypes.string
+    })
 }
 
 class Footer extends React.Component {
