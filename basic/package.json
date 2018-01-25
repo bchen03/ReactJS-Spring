@@ -18,19 +18,24 @@
   },
   "homepage": "https://github.com/spring-guides/tut-react-and-spring-data-rest",
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "rest": "^1.3.1",
-    "webpack": "^1.12.2"
+    "rest": "^1.3.1"
   },
   "scripts": {
-    "watch": "webpack --watch -d"
+    "watch": "webpack --watch -d",
+    "copy": "copy src\\main\\resources\\static\\bundle.js src\\main\\js\\ && copy src\\main\\resources\\static\\main.css src\\main\\js\\",
+    "dev": "webpack -d && npm run copy && webpack-dev-server"
   },
   "devDependencies": {
-    "babel-core": "^6.18.2",
-    "babel-loader": "^6.2.7",
-    "babel-polyfill": "^6.16.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-react": "^6.16.0"
+    "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^3.9.1",
+    "webpack-dev-server": "^2.11.1"
   }
 }
