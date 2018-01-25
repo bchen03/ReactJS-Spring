@@ -51,19 +51,26 @@ class App extends React.Component {
             });
     }
 
+    renderResult() {
+        // Show a loading panel if waiting for results
+        return (!this.state.isLoading) ?
+            <FileList files={this.state.files} /> :
+            <div className="container mt-3">Loading data. Please wait...</div>
+    }
+
 	render() {
 		return (
-		    <div>
+		    <div style={{height:"100%"}}>
                 <NavBar host={this.state.host} onReload={this.reloadFiles} />
                 <ErrorPanel errorMessage={this.state.errorMessage} />
-                <AppLoadingHOC isLoading={this.state.isLoading} files={this.state.files} />
 
-                {
-                    // Show a loading panel
-//                    !this.state.isLoading ?
-//                    <FileList files={this.state.files} /> :
-//                    <div className="container mt-3">Loading data. Please wait...</div>
-                }
+                {/*HOC:*/}
+                <FileListLoadingHOC isLoading={this.state.isLoading} files={this.state.files} />
+
+                {/*
+                    <br/>Render Props: <FileListLoadingRenderProps isLoading={this.state.isLoading} files={this.state.files} />
+                    <br/>Inline Render: RenderResult()
+                */}
 
                 <Footer />
             </div>
@@ -124,27 +131,28 @@ class FileList extends React.Component {
     constructor(props) {
         super(props);
 
+        console.log("FileList constructor called w/ props: ", this.props)
+
 		this.message = <p><strong>Click on the Reload button above to refresh the file list, or a file below to view:</strong></p>;
-		this.files = this.props.files.map((file, index) =>
-            <File key={index} file={file}/>
-        );
     }
 
     render() {
-        console.log("FileList::Files: ", this.files);
+		var files = this.props.files.map((file, index) =>
+            <File key={index} file={file}/>
+        );
 
         return (
             <div className="container mt-3">
                 {this.message}
                 <div className="list-group">
-                    {this.files}
+                    {files}
                 </div>
             </div>
         );
     }
 }
 
-// HOC
+// Higher Order Component (HOC) - Basically the Decorator pattern
 function loadingHOC(WrappedComponent) {
     return class extends React.Component {
         render() {
@@ -157,8 +165,31 @@ function loadingHOC(WrappedComponent) {
     }
 }
 
-const AppLoadingHOC = loadingHOC(FileList);
+const FileListLoadingHOC = loadingHOC(FileList);
 
+// Render Props - this is a horrible example
+class LoadingRenderProps extends React.Component {
+    render() {
+        console.log("isLoading:", this.props.isLoading, ", files: ", this.props.files);
+        return (
+            <div>{this.props.render(this.props.isLoading, this.props.files)}</div>
+        );
+    }
+}
+
+class FileListLoadingRenderProps extends React.Component {
+    render() {
+        return (
+            <LoadingRenderProps {...this.props} render={(isLoading, files) => (
+                (!isLoading) ?
+                <FileList files={files} /> :
+                <div className="container mt-3">
+                    Loading data. Please wait...
+                </div>
+            )}/>
+        );
+    }
+}
 
 class File extends React.Component {
     render() {
@@ -174,13 +205,16 @@ class File extends React.Component {
 class Footer extends React.Component {
     render() {
         return (
-            <footer className="page-footer navbar-dark mdb-color darken-1 center-on-small-only pt-0 container-fluid fixed-bottom">
-                <div className="footer-copyright row">
-                    <div className="container-fluid">
-                        © 2018 Copyright: <a href="http://localhost:8080">mPlatform QA Tests</a>
+            <div>
+                <div style={{height: "5rem"}}/>
+                <footer className="page-footer navbar-dark mdb-color darken-1 center-on-small-only pt-0 container-fluid fixed-bottom">
+                    <div className="footer-copyright row">
+                        <div className="container-fluid">
+                            © 2018 Copyright: <a href="http://localhost:8080">mPlatform QA Tests</a>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         );
     }
 }
