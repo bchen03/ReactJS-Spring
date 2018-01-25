@@ -2,7 +2,7 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const client = require('./client');
+//const client = require('./client');
 
 class App extends React.Component {
 
@@ -38,10 +38,9 @@ class App extends React.Component {
                     response.json().then(
                         data => {
                             console.log("Files success: ", data);
-//                            setTimeout(() => {
+//                            setTimeout(() => {    // Give time for loading panel to show
                                 this.setState({files: data, errorMessage: "", isLoading: false});
-//                            }, 5000);
-
+//                            }, 2000);
                         }
                     );
                 }
@@ -56,34 +55,23 @@ class App extends React.Component {
 		return (
 		    <div>
                 <NavBar host={this.state.host} onReload={this.reloadFiles} />
-                <Error errorMessage={this.state.errorMessage} />
+                <ErrorPanel errorMessage={this.state.errorMessage} />
+                <AppLoadingHOC isLoading={this.state.isLoading} files={this.state.files} />
+
                 {
-                    !this.state.isLoading ?
-                    <FileList files={this.state.files} /> :
-                    <div className="container mt-3">Loading data. Please wait...</div>
+                    // Show a loading panel
+//                    !this.state.isLoading ?
+//                    <FileList files={this.state.files} /> :
+//                    <div className="container mt-3">Loading data. Please wait...</div>
                 }
+
                 <Footer />
             </div>
 		)
 	}
 }
 
-function Error(props) {
-    var errorStyle = {
-        color: "white",
-        backgroundColor: "red",
-        fontWeight: "bold"
-    }
-
-    if (props.errorMessage)
-        return <div style={errorStyle}>{props.errorMessage}</div>;
-    else
-        return <div></div>
-
-}
-
 class NavBar extends React.Component {
-
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark mdb-color darken-1 container-fluid">
@@ -107,6 +95,19 @@ class NavBar extends React.Component {
     }
 }
 
+function ErrorPanel(props) {
+    var errorStyle = {
+        color: "white",
+        backgroundColor: "red",
+        fontWeight: "bold"
+    }
+
+    if (props.errorMessage)
+        return <div style={errorStyle}>{props.errorMessage}</div>;
+    else
+        return <div></div>
+}
+
 class ReloadButton extends React.Component {
     render() {
         return (
@@ -120,30 +121,52 @@ class ReloadButton extends React.Component {
 }
 
 class FileList extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
 
-		var message = <p><strong>Click on the Reload button above to refresh the file list, or a file below to view:</strong></p>;
-		var files = this.props.files.map((file, index) =>
+		this.message = <p><strong>Click on the Reload button above to refresh the file list, or a file below to view:</strong></p>;
+		this.files = this.props.files.map((file, index) =>
             <File key={index} file={file}/>
         );
+    }
 
-        console.log("FileList::Files: ", files);
+    render() {
+        console.log("FileList::Files: ", this.files);
 
         return (
             <div className="container mt-3">
-                {message}
+                {this.message}
                 <div className="list-group">
-                    {files}
+                    {this.files}
                 </div>
             </div>
         );
     }
 }
 
+// HOC
+function loadingHOC(WrappedComponent) {
+    return class extends React.Component {
+        render() {
+            return (!this.props.isLoading) ?
+                <WrappedComponent {...this.props} /> :
+                <div className="container mt-3">
+                    Loading data. Please wait...
+                </div>;
+        }
+    }
+}
+
+const AppLoadingHOC = loadingHOC(FileList);
+
+
 class File extends React.Component {
     render() {
         return (
-            <a className="list-group-item list-group-item-action" href={this.props.file.url} target="_blank">{this.props.file.title}</a>
+            <a className="list-group-item list-group-item-action" href={this.props.file.url} target="_blank">
+                <i className="fa fa-file-text-o mr-1" aria-hidden="true"></i>
+                <span>{this.props.file.title}</span>
+            </a>
         );
     }
 }
