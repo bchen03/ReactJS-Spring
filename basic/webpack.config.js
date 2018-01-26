@@ -1,7 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var SRC_DIR = path.resolve(__dirname, "src/main/js");
+//var SRC_DIR = path.resolve(__dirname, "src/main/js");
+var SRC_DIR = path.resolve(__dirname, "src/main/resources/static");
 var DIST_DIR = path.resolve(__dirname, "src/main/resources/static");
 
 module.exports = {
@@ -35,9 +36,14 @@ module.exports = {
                 options: {
                     presets: [
                         ["react"],
-                        ["es2015"]
+                        ["es2015", { modules: false }],  // Enable tree-shaking
+                        ["stage-2"]
                     ]
                 }
+            },
+            {
+                test: /\.(css|scss)$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
             }
         ]
     }

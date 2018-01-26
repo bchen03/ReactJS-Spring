@@ -1,8 +1,10 @@
 'use strict';
 
-const React = require('react');
-const ReactDOM = require('react-dom');
-var PropTypes = require('prop-types');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+
+import './main.css';
 
 class App extends React.Component {
 	constructor(props) {
@@ -127,7 +129,7 @@ function ErrorPanel(props) {
     if (props.errorMessage)
         return <div style={errorStyle}>{props.errorMessage}</div>;
     else
-        return <div></div>
+        return null;
 }
 
 ErrorPanel.propTypes = {
