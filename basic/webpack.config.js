@@ -1,23 +1,42 @@
+var webpack = require('webpack');
 var path = require('path');
 
+var SRC_DIR = path.resolve(__dirname, "src/main/js");
+var DIST_DIR = path.resolve(__dirname, "src/main/resources/static");
+
 module.exports = {
-    entry: './src/main/js/app.js',
-    devtool: 'sourcemaps',
-    cache: true,
-    debug: true,
+    entry: SRC_DIR +'/app.js',
+    //cache: true,
+    //debug: true,
     output: {
-        path: __dirname,
-        filename: './src/main/resources/static/built/bundle.js'
+        path: DIST_DIR,
+        filename: 'bundle.js',
+        publicPath: "/"
+    },
+    devServer: {
+        contentBase: SRC_DIR,
+        publicPath: "/",
+        compress: true,
+        stats: "errors-only",   // Only show error messages
+        open: true,             // Opens new browser window when running dev server for first time
+        port: 8083
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: path.join(__dirname, '.'),
-                exclude: /(node_modules)/,
-                loader: 'babel',
-                query: {
-                    cacheDirectory: true,
-                    presets: ['es2015', 'react']
+                test: /\.js?/,
+                include: [
+                    SRC_DIR
+                ],
+                exclude: [
+                    /node_modules/
+                ],
+                loader: "babel-loader",
+                options: {
+                    presets: [
+                        ["react"],
+                        ["es2015"]
+                    ]
                 }
             }
         ]

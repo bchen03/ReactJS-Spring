@@ -3,7 +3,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 var PropTypes = require('prop-types');
-//const client = require('./client');
 
 class App extends React.Component {
 	constructor(props) {
@@ -14,11 +13,13 @@ class App extends React.Component {
 		this.state = {
 		    files: [],
 		    host: window.location.href,
+		    //host: "http://localhost:8080/",
 		    errorMessage: "",
 		    isLoading: false
         };
 
 		this.reloadFiles = this.reloadFiles.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -53,15 +54,20 @@ class App extends React.Component {
 
     renderResult() {
         // Show a loading panel if waiting for results
-        return (!this.state.isLoading) ?
-            <FileList files={this.state.files} /> :
-            <div className="container mt-3">Loading data. Please wait...</div>
+//        return (!this.state.isLoading) ?
+//            <FileList files={this.state.files} /> :
+//            <div className="container mt-3">Loading data. Please wait...</div>
+    }
+
+    handleChange(event) {
+        console.log("App:handleChange, event: ", event.target.value);
+        this.setState({host: event.target.value});
     }
 
 	render() {
 		return (
 		    <div style={{height:"100%"}}>
-                <NavBar host={this.state.host} onReload={this.reloadFiles} />
+                <NavBar host={this.state.host} onChange={this.handleChange} onReload={this.reloadFiles} />
                 <ErrorPanel errorMessage={this.state.errorMessage} />
 
                 {/*HOC:*/}
@@ -82,7 +88,7 @@ class NavBar extends React.Component {
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark mdb-color darken-1 container-fluid">
-                <a className="navbar-brand" href="#">mPlatform QA Tests</a>
+                <a className="navbar-brand pt-3" href="#"><h3><strong>mPlatform File Viewer</strong></h3></a>
 
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
@@ -91,9 +97,14 @@ class NavBar extends React.Component {
                     <ul className="navbar-nav mr-auto">
                     </ul>
 
+                    <form className="form-inline">
+                        <input className="form-control mr-4" type="text"
+                            onChange={this.props.onChange} value={this.props.host} placeholder="API Host" aria-label="API Host" />
+                    </form>
+
                     <ul className="navbar-nav">
                         <li className="nav-item">
-        		            <button type="button" className="btn btn-info" onClick={this.props.onReload}>Reload</button>
+        		            <button type="button" className="btn warning-color" onClick={this.props.onReload}>Reload</button>
                         </li>
                     </ul>
                 </div>
@@ -229,7 +240,7 @@ class Footer extends React.Component {
                 <footer className="page-footer navbar-dark mdb-color darken-1 center-on-small-only pt-0 container-fluid fixed-bottom">
                     <div className="footer-copyright row">
                         <div className="container-fluid">
-                            © 2018 Copyright: <a href="http://localhost:8080">mPlatform QA Tests</a>
+                            © 2018 Copyright: <a href="http://localhost:8080">mPlatform File Viewer</a>
                         </div>
                     </div>
                 </footer>

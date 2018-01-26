@@ -1,6 +1,7 @@
 package com.greglturnquist.payroll;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class FilesController {
     @Autowired
     Environment environment;
 
+    @CrossOrigin(origins = "http://localhost:8083")
     @RequestMapping("/api/files")
     public List<Map<String,String>> getFiles(HttpServletRequest httpServletRequest) throws IOException {
 
