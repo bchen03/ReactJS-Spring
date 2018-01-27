@@ -29,7 +29,8 @@
     "watch": "webpack --watch -d",
     "copy": "copy src\\main\\resources\\templates\\index.html src\\main\\web\\",
     "dev": "npm run copy && webpack -d && webpack-dev-server",
-    "prod": "npm run copy && webpack -p"
+    "prod": "npm run copy && webpack -p",
+    "dev-server": "webpack-dev-server"
   },
   "devDependencies": {
     "babel": "^6.23.0",
