@@ -1,8 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-//var SRC_DIR = path.resolve(__dirname, "src/main/js");
-var SRC_DIR = path.resolve(__dirname, "src/main/resources/static");
+var SRC_DIR = path.resolve(__dirname, "src/main/web");
 var DIST_DIR = path.resolve(__dirname, "src/main/resources/static");
 
 module.exports = {
@@ -44,7 +43,41 @@ module.exports = {
             {
                 test: /\.(css|scss)$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
-            }
+            },
+            {
+                test: /\.(gif|jpg|png|svg)$/, 
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8192
+                        }
+                    }
+                ] 
+            },            
+            {
+                test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                use: [
+                        {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'font/',
+                            publicPath: '/',
+                            useRelativePath: true
+                        }
+                    }
+                ]
+            }            
         ]
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            '$': 'jquery',
+            'jQuery': 'jquery',
+            'window.jQuery': 'jquery',
+            'Popper': 'popper.js',
+            'Waves': 'node-waves'
+        })    
+    ]
 };
