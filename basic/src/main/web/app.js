@@ -80,15 +80,26 @@ class App extends React.Component {
                 <NavBar host={this.state.host} onChange={this.handleChange} onReload={this.reloadFiles} />
                 <ErrorPanel errorMessage={this.state.errorMessage} />
 
-                {/*HOC:*/}
-                <FileListLoadingHOC isLoading={this.state.isLoading} files={this.state.files} />
+                {/*Render Props:*/}
+                <FileListLoadingRenderProps isLoading={this.state.isLoading} files={this.state.files} >
+                    {
+                        (isLoading, files) => (
+                            (!isLoading) ?
+                            <FileList files={files} /> :
+                            <div className="container mt-3">
+                                Loading data. Please wait...
+                            </div>
+                        )
+                    }
+                </FileListLoadingRenderProps>
 
-                {/*
-                    <br/>Render Props: <FileListLoadingRenderProps isLoading={this.state.isLoading} files={this.state.files} />
-                    <br/>Inline Render: RenderResult()
-                */}
+                {/*HOC:*/
+                 /*<FileListLoadingHOC isLoading={this.state.isLoading} files={this.state.files} />*/}
 
-                <Footer />
+                {/*Inline Render:*/
+                 /*RenderResult()*/}
+
+                <Footer host={this.state.host} />
             </div>
 		)
 	}
@@ -201,29 +212,25 @@ function loadingHOC(WrappedComponent) {
 
 const FileListLoadingHOC = loadingHOC(FileList);
 
-// Render Props - this is a horrible example
-class LoadingRenderProps extends React.Component {
+// Function as Child Component (Facc)/Render Props 
+// This one just passes props to the children function but the better pattern is 
+// to generate some state and pass that to the function; you don't have to only use
+// this.props.children either, you can use any prop, i.e.
+// <FileListLoadingRenderProps customprop={parm1 => <div>do some with parm1</div>} />
+class FileListLoadingRenderProps extends React.Component {
     render() {
-        console.log("isLoading:", this.props.isLoading, ", files: ", this.props.files);
         return (
-            <div>{this.props.render(this.props.isLoading, this.props.files)}</div>
+            <div>{this.props.children(this.props.isLoading, this.props.files)}</div>
         );
     }
 }
 
-class FileListLoadingRenderProps extends React.Component {
-    render() {
-        return (
-            <LoadingRenderProps {...this.props} render={(isLoading, files) => (
-                (!isLoading) ?
-                <FileList files={files} /> :
-                <div className="container mt-3">
-                    Loading data. Please wait...
-                </div>
-            )}/>
-        );
-    }
+FileListLoadingRenderProps.propTypes = {
+    children: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool,
+    files: PropTypes.array
 }
+
 
 class File extends React.Component {
     render() {
@@ -251,7 +258,7 @@ class Footer extends React.Component {
                 <footer className="page-footer navbar-dark mdb-color darken-1 center-on-small-only pt-0 container-fluid fixed-bottom">
                     <div className="footer-copyright row">
                         <div className="container-fluid">
-                            © 2018 Copyright: <a href="http://localhost:8080">mPlatform File Viewer</a>
+                            © 2018 Copyright: <a href={this.props.host}>mPlatform File Viewer</a>
                         </div>
                     </div>
                 </footer>
