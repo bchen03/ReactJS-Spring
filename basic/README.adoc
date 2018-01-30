@@ -1,4 +1,45 @@
 [[react-and-spring-data-rest-part-1]]
+
+@-@
+
+= ReactJS-Spring  
+
+This project shows how to use ReactJS with Spring REST API to create a .jar 
+for use in a docker container. The application is a HTML file viewer app for 
+mstorebackend QA team to view automated test reports they generate. 
+
+
+== API
+
+API code is in `basic\src\main\java\<package>\payroll`.
+
+Spring Boot REST API uses the `spring-boot-starter-web` maven package. The 
+annotations `@RestController`, `@RequestMapping` are used to define the API 
+endpoints.
+
+
+== ReactJS
+
+ReactJS code is in `basic\src\main\web`.
+
+Tools used are ReactJS, Webpack, Babel, Bootstrap, and MDB. 
+
+
+== Spring to ReactJS bootstrapping
+
+Bootstrapping code is in `basic\src\main\java\<package>\payroll\HomeController.java`.
+
+To bootstrap Spring to ReactJS, Spring MVC maps the default URL `http:/localhost:8080/` 
+to the `HomeController.index()` method and returns the name of the view template file `index`. 
+Using Thymeleaf, this maps to `basic\src\resources\templates\index.html` which loads the
+ReactJS bundle in a script tag `<script src="bundle.js"></script>`.  
+
+---
+
+`Below is the documentation for the sample code used as a base for this project 
+(although heavily modified).`
+
+
 = Part 1 - Basic Features
 :sourcedir: https://github.com/spring-guides/tut-react-and-spring-data-rest/tree/master
 
