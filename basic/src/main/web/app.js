@@ -64,9 +64,9 @@ class App extends React.Component {
                     response.json().then(
                         data => {
                             console.log("Files success: ", data);
-                            setTimeout(() => {    // Give time for loading panel to show
+//                            setTimeout(() => {    // Give time for loading panel to show
                                 this.setState({files: data, errorMessage: "", isLoading: false});
-                            }, 2000);
+//                            }, 2000);
                         }
                     );
                 }

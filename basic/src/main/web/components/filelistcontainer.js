@@ -69,10 +69,10 @@ export default class FileListContainer extends React.Component {
                     response.json().then(
                         data => {
                             console.log("Files success: ", data);
-                            setTimeout(() => {    // Give time for loading panel to show
+//                            setTimeout(() => {    // Give time for loading panel to show
                                 this.setState({files: data, isLoading: false /*, errorMessage: ""*/});
                                 this.props.onError("");
-                            }, 2000);
+//                            }, 2000);
                         }
                     );
                 }
