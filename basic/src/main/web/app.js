@@ -22,7 +22,7 @@ import 'mdbootstrap/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';
 import './main.css';
 
-class App extends React.Component {
+export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 

@@ -35,9 +35,12 @@ module.exports = {
                 options: {
                     presets: [
                         ["react"],
-                        ["es2015", { modules: false }],  // Enable tree-shaking
-                        ["stage-2"]
+                        //["es2015", { modules: false }],  // Enable tree-shaking
+                        ["es2015"],  
+                        ["stage-2"],
+                        ["env"]
                     ]
+                    //,plugins: ['transform-es2015-modules-commonjs']
                 }
             },
             {
