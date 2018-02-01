@@ -34,13 +34,16 @@ module.exports = {
                 loader: "babel-loader",
                 options: {
                     presets: [
-                        ["react"],
-                        //["es2015", { modules: false }],  // Enable tree-shaking
-                        ["es2015"],  
-                        ["stage-2"],
-                        ["env"]
+                        // .babelrc
+                        //
+                        // The babel presets are in .babelrc because some tools like Jest 
+                        // won't pick up settings from Webpack. Since Webpack WILL use 
+                        // .babelrc it's better to keep it there.
+                        //
+                        // ["react"]
+                        // ,["es2015", { modules: false }],  // Enable tree-shaking
+                        // ,["stage-2"] 
                     ]
-                    //,plugins: ['transform-es2015-modules-commonjs']
                 }
             },
             {

@@ -1,5 +1,5 @@
 {
-  "name": "mPlatform-file-viewer",
+  "name": "mplatform-file-viewer",
   "version": "0.1.0",
   "description": "mPlatform file viewer for QA",
   "repository": {
@@ -35,7 +35,7 @@
     "dev": "npm run copy && webpack -d && webpack-dev-server",
     "prod": "npm run copy && webpack -p",
     "dev-server": "webpack-dev-server",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "devDependencies": {
     "babel": "^6.23.0",
