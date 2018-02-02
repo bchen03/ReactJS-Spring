@@ -7,20 +7,20 @@ import "bootstrap";
 import "mdbootstrap";
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
-import NavBar from './components/navbar';
-import ErrorPanel from './components/errorpanel';
-//import FileListContainer from './components/filelistcontainer';
-import FileListLoadingHOC from './components/filelistloadinghoc';
-//import FileListLoadingRenderProps from './components/filelistloadingrenderprops';
-//import FileList from './components/filelist';
-import Footer from './components/footer';
+import NavBar from './navbar';
+import ErrorPanel from './errorpanel';
+//import FileListContainer from './filelistcontainer';
+import FileListLoadingHOC from './filelistloadinghoc';
+//import FileListLoadingRenderProps from './filelistloadingrenderprops';
+//import FileList from './filelist';
+import Footer from './footer';
 
 import 'mdbootstrap/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';
-import './main.css';
+import '../main.css';
+
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -127,9 +127,4 @@ export default class App extends React.Component {
 		)
 	}
 }
-
-ReactDOM.render(
-	<App />,
-	document.getElementById('react')
-)
 

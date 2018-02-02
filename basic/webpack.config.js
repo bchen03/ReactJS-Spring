@@ -5,7 +5,7 @@ var SRC_DIR = path.resolve(__dirname, "src/main/web");
 var DIST_DIR = path.resolve(__dirname, "src/main/resources/static");
 
 module.exports = {
-    entry: SRC_DIR +'/app.js',
+    entry: SRC_DIR +'/index.js',
     //cache: true,
     //debug: true,
     output: {
